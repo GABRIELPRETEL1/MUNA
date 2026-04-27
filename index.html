@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MunAi - Asistente para adultos mayores</title>
+  <style>
+    :root {
+      --bg: #f4f8ff;
+      --card: #ffffff;
+      --primary: #1f5eff;
+      --primary-hover: #1748c9;
+      --text: #16213e;
+      --soft: #e6eeff;
+      --ok: #0f9d58;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, var(--bg), #eef7f1);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .app {
+      width: min(960px, 100%);
+      background: var(--card);
+      border-radius: 24px;
+      box-shadow: 0 12px 30px rgba(17, 40, 90, 0.12);
+      padding: 24px;
+      border: 3px solid var(--soft);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    .title {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+      font-size: 1.2rem;
+    }
+
+    .assistant-box {
+      background: #f8fbff;
+      border: 2px solid #dce8ff;
+      border-radius: 18px;
+      padding: 20px;
+      min-height: 130px;
+      font-size: 1.35rem;
+      line-height: 1.55;
+      margin-bottom: 16px;
+    }
+
+    .assistant-status {
+      font-weight: 700;
+      color: var(--ok);
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin: 14px 0 20px;
+    }
+
+    button {
+      width: 100%;
+      min-height: 88px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      border-radius: 16px;
+      border: none;
+      cursor: pointer;
+      background: var(--primary);
+      color: #fff;
+      padding: 14px;
+      transition: transform 0.08s ease, background 0.2s ease;
+    }
+
+    button:hover,
+    button:focus-visible {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+      outline: 4px solid #aac4ff;
+      outline-offset: 2px;
+    }
+
+    .input-area {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    label {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      min-height: 64px;
+      border: 2px solid #bbcdf5;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 1.2rem;
+    }
+
+    .send {
+      min-height: 74px;
+      font-size: 1.25rem;
+      background: #0d7f44;
+    }
+
+    .send:hover,
+    .send:focus-visible {
+      background: #086735;
+      outline-color: #8bddb2;
+    }
+
+    .help {
+      margin-top: 18px;
+      background: #fffdf0;
+      border: 2px solid #f2df8a;
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 1.1rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 640px) {
+      .app { padding: 16px; }
+      button { min-height: 78px; font-size: 1.15rem; }
+      .assistant-box { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app" aria-label="Asistente MunAi">
+    <header class="header">
+      <h1 class="title">MunAi</h1>
+      <p class="subtitle">Tu asistente de inteligencia artificial para adultos mayores.</p>
+    </header>
+
+    <section class="assistant-box" aria-live="polite" id="responseBox">
+      <span class="assistant-status">● En línea</span>
+      <div id="responseText">Hola, soy MunAi. Estoy aquí para ayudarte con calma y palabras sencillas. ¿Qué necesitas hoy?</div>
+    </section>
+
+    <section class="buttons" aria-label="Acciones rápidas">
+      <button type="button" data-msg="Recuérdame tomar mi medicina a las 8 de la noche.">💊 Recordatorio de medicina</button>
+      <button type="button" data-msg="¿Qué ejercicios suaves puedo hacer en casa?">🧘 Ejercicio suave</button>
+      <button type="button" data-msg="Quiero hablar con mi familia por video. ¿Cómo empiezo?">📞 Llamar a mi familia</button>
+      <button type="button" data-msg="Explícame una noticia con palabras fáciles.">📰 Explicar una noticia</button>
+      <button type="button" data-msg="Necesito organizar mis citas médicas de esta semana.">🗓️ Organizar citas</button>
+      <button type="button" data-msg="Me siento solo. ¿Qué puedo hacer hoy para sentirme mejor?">❤️ Bienestar emocional</button>
+    </section>
+
+    <section class="input-area">
+      <label for="userQuestion">Escribe tu pregunta (con tus palabras):</label>
+      <input id="userQuestion" type="text" placeholder="Ejemplo: ¿Cómo envío una foto por WhatsApp?" />
+      <button class="send" id="sendBtn" type="button">Enviar pregunta a MunAi</button>
+    </section>
+
+    <section class="help" aria-label="Ayuda adicional">
+      <strong>Consejo:</strong> Puedes tocar cualquier botón azul para pedir ayuda rápida. 
+      Si quieres, también puedes escribir tu pregunta y tocar el botón verde.
+    </section>
+  </main>
+
+  <script>
+    const responseText = document.getElementById('responseText');
+    const quickButtons = document.querySelectorAll('[data-msg]');
+    const questionInput = document.getElementById('userQuestion');
+    const sendBtn = document.getElementById('sendBtn');
+
+    function buildSimpleResponse(message) {
+      const lower = message.toLowerCase();
+
+      if (lower.includes('medicina')) {
+        return 'Claro. Te recomiendo poner una alarma diaria en tu teléfono a las 8:00 p. m. Si quieres, te guío paso a paso para crearla.';
+      }
+
+      if (lower.includes('ejercicio')) {
+        return 'Puedes empezar con 10 minutos: caminar dentro de casa, mover hombros y estirar brazos suavemente. Hazlo despacio y sin dolor.';
+      }
+
+      if (lower.includes('familia') || lower.includes('video')) {
+        return 'Muy bien. Abre WhatsApp, busca a tu familiar, toca el ícono de cámara y empieza la videollamada. Si quieres, te explico cada botón.';
+      }
+
+      if (lower.includes('noticia')) {
+        return 'Con gusto. Puedo explicarte una noticia en palabras simples: qué pasó, por qué importa y cómo te puede afectar.';
+      }
+
+      if (lower.includes('citas')) {
+        return 'Buena idea. Hagamos una lista por día: fecha, hora, doctor y dirección. Así será más fácil recordar todo.';
+      }
+
+      if (lower.includes('solo') || lower.includes('bienestar')) {
+        return 'Lamento que te sientas así. Puedes llamar a un ser querido, escuchar música tranquila o dar una caminata corta. Hablar ayuda mucho.';
+      }
+
+      return 'Gracias por tu pregunta. Te responderé con pasos claros y simples para ayudarte de forma segura y tranquila.';
+    }
+
+    function answer(message) {
+      if (!message.trim()) {
+        responseText.textContent = 'Por favor, escribe una pregunta corta para poder ayudarte.';
+        return;
+      }
+
+      responseText.textContent = buildSimpleResponse(message);
+    }
+
+    quickButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const message = btn.getAttribute('data-msg') || '';
+        answer(message);
+      });
+    });
+
+    sendBtn.addEventListener('click', () => {
+      answer(questionInput.value);
+      questionInput.focus();
+    });
+
+    questionInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        answer(questionInput.value);
+      }
+    });
+  </script>
+</body>
+</html>
