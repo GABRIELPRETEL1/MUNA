@@ -3,248 +3,359 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MunAi - Asistente para adultos mayores</title>
+  <title>Asesor Financiero Pro · Interés Compuesto</title>
   <style>
     :root {
-      --bg: #f4f8ff;
-      --card: #ffffff;
-      --primary: #1f5eff;
-      --primary-hover: #1748c9;
-      --text: #16213e;
-      --soft: #e6eeff;
-      --ok: #0f9d58;
+      --bg: #0b1220;
+      --panel: #111a2b;
+      --panel-soft: #17243b;
+      --text: #eef3ff;
+      --muted: #9fb0d3;
+      --accent: #5fd4a8;
+      --accent-2: #6fa4ff;
+      --danger: #ff7c8a;
+      --warning: #ffd166;
+      --border: #243656;
     }
-
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(180deg, var(--bg), #eef7f1);
+      font-family: Inter, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top right, #152546 0, var(--bg) 50%);
       color: var(--text);
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
     }
-
-    .app {
-      width: min(960px, 100%);
-      background: var(--card);
-      border-radius: 24px;
-      box-shadow: 0 12px 30px rgba(17, 40, 90, 0.12);
-      padding: 24px;
-      border: 3px solid var(--soft);
-    }
-
-    .header {
-      text-align: center;
-      margin-bottom: 18px;
-    }
-
-    .title {
-      margin: 0;
-      font-size: clamp(2rem, 4vw, 3rem);
-      line-height: 1.2;
-    }
-
-    .subtitle {
-      margin-top: 10px;
-      font-size: 1.2rem;
-    }
-
-    .assistant-box {
-      background: #f8fbff;
-      border: 2px solid #dce8ff;
-      border-radius: 18px;
-      padding: 20px;
-      min-height: 130px;
-      font-size: 1.35rem;
-      line-height: 1.55;
-      margin-bottom: 16px;
-    }
-
-    .assistant-status {
-      font-weight: 700;
-      color: var(--ok);
-      margin-bottom: 8px;
-      display: inline-block;
-    }
-
-    .buttons {
+    .container {
+      width: min(1200px, 95%);
+      margin: 24px auto 40px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 14px;
-      margin: 14px 0 20px;
+      gap: 16px;
+      grid-template-columns: 370px 1fr;
     }
-
-    button {
-      width: 100%;
-      min-height: 88px;
-      font-size: 1.3rem;
-      font-weight: 700;
+    .card {
+      background: linear-gradient(180deg, var(--panel) 0%, #0f1728 100%);
+      border: 1px solid var(--border);
       border-radius: 16px;
-      border: none;
-      cursor: pointer;
-      background: var(--primary);
-      color: #fff;
-      padding: 14px;
-      transition: transform 0.08s ease, background 0.2s ease;
+      padding: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
     }
-
-    button:hover,
-    button:focus-visible {
-      background: var(--primary-hover);
-      transform: translateY(-1px);
-      outline: 4px solid #aac4ff;
-      outline-offset: 2px;
-    }
-
-    .input-area {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    label {
-      font-size: 1.2rem;
-      font-weight: 700;
-    }
-
-    input {
+    h1 { font-size: 1.2rem; margin: 0 0 8px; }
+    h2 { font-size: 1rem; margin: 0 0 12px; color: #dce7ff; }
+    .sub { color: var(--muted); font-size: .92rem; margin-bottom: 14px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+    label { display: block; font-size: .83rem; color: #c8d6f5; margin-bottom: 5px; }
+    input, select, button {
       width: 100%;
-      min-height: 64px;
-      border: 2px solid #bbcdf5;
-      border-radius: 14px;
-      padding: 12px 14px;
-      font-size: 1.2rem;
+      border-radius: 10px;
+      border: 1px solid #30466f;
+      background: #0d1525;
+      color: var(--text);
+      padding: 10px 11px;
+      font-size: .95rem;
     }
-
-    .send {
-      min-height: 74px;
-      font-size: 1.25rem;
-      background: #0d7f44;
+    input:focus, select:focus { outline: 2px solid #4d78ca; border-color: transparent; }
+    button {
+      border: 1px solid #2f5ea8;
+      background: linear-gradient(180deg, #2d5fa8 0%, #23497f 100%);
+      cursor: pointer;
+      font-weight: 600;
     }
-
-    .send:hover,
-    .send:focus-visible {
-      background: #086735;
-      outline-color: #8bddb2;
+    button:hover { filter: brightness(1.08); }
+    .secondary { background: #1d2b48; border-color: #355386; }
+    .muted { color: var(--muted); font-size: .82rem; }
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .badge {
+      font-size: .75rem; padding: 6px 8px; border-radius: 999px;
+      border: 1px solid #2b4268; background: #132035;
     }
-
-    .help {
-      margin-top: 18px;
-      background: #fffdf0;
-      border: 2px solid #f2df8a;
-      border-radius: 14px;
-      padding: 14px;
-      font-size: 1.1rem;
-      line-height: 1.5;
+    .kpi-wrap { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+    .kpi {
+      border: 1px solid #29426d;
+      border-radius: 12px;
+      background: var(--panel-soft);
+      padding: 11px;
     }
-
-    @media (max-width: 640px) {
-      .app { padding: 16px; }
-      button { min-height: 78px; font-size: 1.15rem; }
-      .assistant-box { font-size: 1.2rem; }
+    .kpi .v { font-size: 1.1rem; font-weight: 700; margin-top: 4px; }
+    .kpi .l { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+    .good { color: var(--accent); }
+    .warn { color: var(--warning); }
+    .danger { color: var(--danger); }
+    .results { display: grid; gap: 16px; }
+    .table-wrap { overflow: auto; border: 1px solid #29426d; border-radius: 12px; }
+    table { width: 100%; border-collapse: collapse; min-width: 780px; }
+    th, td { border-bottom: 1px solid #22375c; padding: 8px; font-size: .84rem; text-align: right; }
+    th { position: sticky; top: 0; background: #12203a; text-align: center; }
+    td:first-child, th:first-child { text-align: center; }
+    canvas { width: 100%; height: 320px; border: 1px solid #29426d; border-radius: 12px; background: #101b31; }
+    .row { display: flex; gap: 8px; }
+    .disclaimer {
+      border-left: 3px solid #3f6198;
+      background: #13223b;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: .8rem;
+      color: #c4d3f6;
+    }
+    @media (max-width: 1000px) {
+      .container { grid-template-columns: 1fr; }
+      .kpi-wrap { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .grid-2 { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-  <main class="app" aria-label="Asistente MunAi">
-    <header class="header">
-      <h1 class="title">MunAi</h1>
-      <p class="subtitle">Tu asistente de inteligencia artificial para adultos mayores.</p>
-    </header>
+  <main class="container">
+    <section class="card">
+      <h1>Asesor Financiero Pro</h1>
+      <p class="sub">Simulador profesional de interés compuesto con escenarios, inflación, impuestos y plan de metas.</p>
+      <form id="form">
+        <h2>Datos de cliente</h2>
+        <div class="grid-2">
+          <div><label>Nombre</label><input id="clientName" value="Cliente General" /></div>
+          <div><label>Perfil de riesgo</label>
+            <select id="risk">
+              <option>Conservador</option>
+              <option selected>Moderado</option>
+              <option>Agresivo</option>
+            </select>
+          </div>
+        </div>
 
-    <section class="assistant-box" aria-live="polite" id="responseBox">
-      <span class="assistant-status">● En línea</span>
-      <div id="responseText">Hola, soy MunAi. Estoy aquí para ayudarte con calma y palabras sencillas. ¿Qué necesitas hoy?</div>
+        <h2 style="margin-top:14px">Supuestos financieros</h2>
+        <div class="grid-2">
+          <div><label>Capital inicial (USD)</label><input id="principal" type="number" min="0" step="100" value="50000" /></div>
+          <div><label>Aportación mensual (USD)</label><input id="monthly" type="number" min="0" step="10" value="800" /></div>
+          <div><label>Tasa nominal anual (%)</label><input id="rate" type="number" step="0.01" value="8.5" /></div>
+          <div><label>Capitalización</label>
+            <select id="compoundFreq">
+              <option value="12" selected>Mensual</option>
+              <option value="4">Trimestral</option>
+              <option value="2">Semestral</option>
+              <option value="1">Anual</option>
+              <option value="365">Diaria</option>
+            </select>
+          </div>
+          <div><label>Plazo (años)</label><input id="years" type="number" min="1" max="60" value="20" /></div>
+          <div><label>Meta final (USD)</label><input id="target" type="number" min="0" step="1000" value="600000" /></div>
+          <div><label>Inflación anual (%)</label><input id="inflation" type="number" min="0" step="0.01" value="3.0" /></div>
+          <div><label>Impuesto sobre rendimientos (%)</label><input id="tax" type="number" min="0" max="100" step="0.1" value="15" /></div>
+          <div><label>Comisión anual (%)</label><input id="fee" type="number" min="0" step="0.01" value="1" /></div>
+          <div><label>Crecimiento anual de aportación (%)</label><input id="contribGrowth" type="number" min="0" step="0.1" value="2.5" /></div>
+        </div>
+
+        <div style="margin-top:14px" class="row">
+          <button type="submit">Calcular plan integral</button>
+          <button type="button" class="secondary" id="printBtn">Exportar PDF</button>
+        </div>
+      </form>
+      <div class="badges">
+        <span class="badge">Método: interés compuesto + aportaciones crecientes</span>
+        <span class="badge">Resultado nominal y real</span>
+        <span class="badge">Escenarios: pesimista/base/optimista</span>
+      </div>
     </section>
 
-    <section class="buttons" aria-label="Acciones rápidas">
-      <button type="button" data-msg="Recuérdame tomar mi medicina a las 8 de la noche.">💊 Recordatorio de medicina</button>
-      <button type="button" data-msg="¿Qué ejercicios suaves puedo hacer en casa?">🧘 Ejercicio suave</button>
-      <button type="button" data-msg="Quiero hablar con mi familia por video. ¿Cómo empiezo?">📞 Llamar a mi familia</button>
-      <button type="button" data-msg="Explícame una noticia con palabras fáciles.">📰 Explicar una noticia</button>
-      <button type="button" data-msg="Necesito organizar mis citas médicas de esta semana.">🗓️ Organizar citas</button>
-      <button type="button" data-msg="Me siento solo. ¿Qué puedo hacer hoy para sentirme mejor?">❤️ Bienestar emocional</button>
-    </section>
+    <section class="results">
+      <div class="card">
+        <h2>Resumen ejecutivo</h2>
+        <div class="kpi-wrap" id="kpis"></div>
+        <div id="analysis" style="margin-top:10px"></div>
+      </div>
 
-    <section class="input-area">
-      <label for="userQuestion">Escribe tu pregunta (con tus palabras):</label>
-      <input id="userQuestion" type="text" placeholder="Ejemplo: ¿Cómo envío una foto por WhatsApp?" />
-      <button class="send" id="sendBtn" type="button">Enviar pregunta a MunAi</button>
-    </section>
+      <div class="card">
+        <h2>Evolución proyectada</h2>
+        <canvas id="chart" width="900" height="330"></canvas>
+      </div>
 
-    <section class="help" aria-label="Ayuda adicional">
-      <strong>Consejo:</strong> Puedes tocar cualquier botón azul para pedir ayuda rápida. 
-      Si quieres, también puedes escribir tu pregunta y tocar el botón verde.
+      <div class="card">
+        <h2>Tabla anual detallada</h2>
+        <div class="table-wrap"><table id="table"></table></div>
+      </div>
+
+      <div class="card disclaimer">
+        Esta herramienta es educativa y de planeación. No constituye recomendación personalizada de inversión ni garantía de rendimiento futuro.
+      </div>
     </section>
   </main>
 
   <script>
-    const responseText = document.getElementById('responseText');
-    const quickButtons = document.querySelectorAll('[data-msg]');
-    const questionInput = document.getElementById('userQuestion');
-    const sendBtn = document.getElementById('sendBtn');
+    const $ = id => document.getElementById(id);
+    const fmt = n => new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(n);
+    const pct = n => `${n.toFixed(2)}%`;
 
-    function buildSimpleResponse(message) {
-      const lower = message.toLowerCase();
-
-      if (lower.includes('medicina')) {
-        return 'Claro. Te recomiendo poner una alarma diaria en tu teléfono a las 8:00 p. m. Si quieres, te guío paso a paso para crearla.';
-      }
-
-      if (lower.includes('ejercicio')) {
-        return 'Puedes empezar con 10 minutos: caminar dentro de casa, mover hombros y estirar brazos suavemente. Hazlo despacio y sin dolor.';
-      }
-
-      if (lower.includes('familia') || lower.includes('video')) {
-        return 'Muy bien. Abre WhatsApp, busca a tu familiar, toca el ícono de cámara y empieza la videollamada. Si quieres, te explico cada botón.';
-      }
-
-      if (lower.includes('noticia')) {
-        return 'Con gusto. Puedo explicarte una noticia en palabras simples: qué pasó, por qué importa y cómo te puede afectar.';
-      }
-
-      if (lower.includes('citas')) {
-        return 'Buena idea. Hagamos una lista por día: fecha, hora, doctor y dirección. Así será más fácil recordar todo.';
-      }
-
-      if (lower.includes('solo') || lower.includes('bienestar')) {
-        return 'Lamento que te sientas así. Puedes llamar a un ser querido, escuchar música tranquila o dar una caminata corta. Hablar ayuda mucho.';
-      }
-
-      return 'Gracias por tu pregunta. Te responderé con pasos claros y simples para ayudarte de forma segura y tranquila.';
+    function teaFromNominal(nominal, m) {
+      return (1 + nominal / m) ** m - 1;
     }
 
-    function answer(message) {
-      if (!message.trim()) {
-        responseText.textContent = 'Por favor, escribe una pregunta corta para poder ayudarte.';
-        return;
+    function simulate({ principal, monthly, rate, years, freq, inflation, tax, fee, target, contribGrowth }) {
+      const rows = [];
+      let balance = principal;
+      let totalContrib = principal;
+      const annualNominal = rate - fee;
+      const annualEffective = teaFromNominal(annualNominal, freq);
+      let reachedAt = null;
+
+      for (let year = 1; year <= years; year++) {
+        const annualContribution = monthly * 12 * ((1 + contribGrowth) ** (year - 1));
+        const preTaxGain = balance * annualEffective;
+        const taxPaid = Math.max(preTaxGain, 0) * tax;
+        const netGain = preTaxGain - taxPaid;
+
+        balance += annualContribution + netGain;
+        totalContrib += annualContribution;
+
+        const realBalance = balance / ((1 + inflation) ** year);
+        const gainAcc = balance - totalContrib;
+        const progress = target > 0 ? (balance / target) * 100 : 0;
+
+        if (!reachedAt && balance >= target) reachedAt = year;
+
+        rows.push({ year, annualContribution, preTaxGain, taxPaid, netGain, totalContrib, balance, realBalance, gainAcc, progress });
       }
 
-      responseText.textContent = buildSimpleResponse(message);
+      return {
+        rows,
+        annualEffective,
+        final: rows.at(-1),
+        reachedAt,
+      };
     }
 
-    quickButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const message = btn.getAttribute('data-msg') || '';
-        answer(message);
-      });
-    });
+    function scenarioSet(baseInputs) {
+      const down = { ...baseInputs, rate: Math.max(baseInputs.rate - 0.03, 0.005) };
+      const base = { ...baseInputs };
+      const up = { ...baseInputs, rate: baseInputs.rate + 0.03 };
+      return { pesimista: simulate(down), base: simulate(base), optimista: simulate(up) };
+    }
 
-    sendBtn.addEventListener('click', () => {
-      answer(questionInput.value);
-      questionInput.focus();
-    });
+    function renderTable(rows) {
+      const table = $('table');
+      table.innerHTML = `
+        <thead>
+          <tr>
+            <th>Año</th><th>Aportación anual</th><th>Rendimiento bruto</th><th>Impuestos</th><th>Rendimiento neto</th><th>Aportado acumulado</th><th>Saldo nominal</th><th>Saldo real</th><th>Progreso meta</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.map(r => `
+            <tr>
+              <td>${r.year}</td>
+              <td>${fmt(r.annualContribution)}</td>
+              <td>${fmt(r.preTaxGain)}</td>
+              <td>${fmt(r.taxPaid)}</td>
+              <td>${fmt(r.netGain)}</td>
+              <td>${fmt(r.totalContrib)}</td>
+              <td>${fmt(r.balance)}</td>
+              <td>${fmt(r.realBalance)}</td>
+              <td>${r.progress.toFixed(1)}%</td>
+            </tr>`).join('')}
+        </tbody>`;
+    }
 
-    questionInput.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter') {
-        answer(questionInput.value);
+    function drawChart(rows, scenarios) {
+      const canvas = $('chart');
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      const all = [
+        ...rows.map(r => r.balance),
+        ...scenarios.pesimista.rows.map(r => r.balance),
+        ...scenarios.optimista.rows.map(r => r.balance)
+      ];
+      const maxY = Math.max(...all) * 1.1;
+      const pad = 35;
+
+      function x(i, n) { return pad + (i / (n - 1)) * (w - pad * 2); }
+      function y(v) { return h - pad - (v / maxY) * (h - pad * 2); }
+
+      ctx.strokeStyle = '#31507f';
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 5; i++) {
+        const yy = pad + i * ((h - 2 * pad) / 5);
+        ctx.beginPath(); ctx.moveTo(pad, yy); ctx.lineTo(w - pad, yy); ctx.stroke();
       }
-    });
+
+      const drawLine = (series, color, width=2) => {
+        ctx.beginPath();
+        series.forEach((v, i) => {
+          const xx = x(i, series.length), yy = y(v);
+          i ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy);
+        });
+        ctx.strokeStyle = color;
+        ctx.lineWidth = width;
+        ctx.stroke();
+      };
+
+      drawLine(scenarios.pesimista.rows.map(r => r.balance), '#ff9b71', 1.8);
+      drawLine(rows.map(r => r.balance), '#6fa4ff', 2.5);
+      drawLine(scenarios.optimista.rows.map(r => r.balance), '#5fd4a8', 1.8);
+
+      ctx.fillStyle = '#c8d6f5';
+      ctx.font = '12px sans-serif';
+      ctx.fillText('Pesimista', w - 260, 18);
+      ctx.fillStyle = '#ff9b71'; ctx.fillRect(w - 320, 10, 40, 3);
+      ctx.fillStyle = '#c8d6f5'; ctx.fillText('Base', w - 170, 18);
+      ctx.fillStyle = '#6fa4ff'; ctx.fillRect(w - 210, 10, 35, 3);
+      ctx.fillStyle = '#c8d6f5'; ctx.fillText('Optimista', w - 90, 18);
+      ctx.fillStyle = '#5fd4a8'; ctx.fillRect(w - 130, 10, 35, 3);
+    }
+
+    function renderKPIs(base, scenarios, inputs) {
+      const final = base.final;
+      const kpiHtml = [
+        ['Saldo final (nominal)', fmt(final.balance), 'good'],
+        ['Saldo final (real)', fmt(final.realBalance), ''],
+        ['Aportaciones acumuladas', fmt(final.totalContrib), ''],
+        ['Rendimiento acumulado', fmt(final.gainAcc), final.gainAcc >= 0 ? 'good' : 'danger'],
+        ['TEA neta estimada', pct(base.annualEffective * 100), 'warn'],
+        ['Año de meta', base.reachedAt ? `Año ${base.reachedAt}` : 'No alcanzada', base.reachedAt ? 'good' : 'danger']
+      ].map(([l, v, cls]) => `<div class="kpi"><div class="l">${l}</div><div class="v ${cls}">${v}</div></div>`).join('');
+      $('kpis').innerHTML = kpiHtml;
+
+      const p = scenarios.pesimista.final.balance;
+      const b = scenarios.base.final.balance;
+      const o = scenarios.optimista.final.balance;
+      const gap = inputs.target - b;
+      const gapTxt = gap > 0 ? `Faltan ${fmt(gap)} para la meta.` : `Meta superada por ${fmt(Math.abs(gap))}.`;
+
+      $('analysis').innerHTML = `
+        <div class="muted">
+          Cliente: <b>${$('clientName').value}</b> · Perfil: <b>${$('risk').value}</b><br>
+          Escenario a ${inputs.years} años → Pesimista: <b>${fmt(p)}</b>, Base: <b>${fmt(b)}</b>, Optimista: <b>${fmt(o)}</b>.<br>
+          <b>${gapTxt}</b> Recomendación: mantener aportaciones periódicas y revisar supuestos cada 6-12 meses.
+        </div>`;
+    }
+
+    function readInputs() {
+      return {
+        principal: +$('principal').value,
+        monthly: +$('monthly').value,
+        rate: +$('rate').value / 100,
+        years: +$('years').value,
+        freq: +$('compoundFreq').value,
+        inflation: +$('inflation').value / 100,
+        tax: +$('tax').value / 100,
+        fee: +$('fee').value / 100,
+        target: +$('target').value,
+        contribGrowth: +$('contribGrowth').value / 100,
+      };
+    }
+
+    function run() {
+      const inputs = readInputs();
+      const base = simulate(inputs);
+      const scenarios = scenarioSet(inputs);
+      renderKPIs(base, scenarios, inputs);
+      renderTable(base.rows);
+      drawChart(base.rows, scenarios);
+    }
+
+    $('form').addEventListener('submit', e => { e.preventDefault(); run(); });
+    $('printBtn').addEventListener('click', () => window.print());
+    run();
   </script>
 </body>
 </html>
