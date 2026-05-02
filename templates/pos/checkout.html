@@ -1,0 +1,7 @@
+<h1>Checkout</h1>
+<form method="post">{% csrf_token %}
+<select name="product_id">{% for p in products %}<option value="{{ p.id }}">{{ p.name }}</option>{% endfor %}</select>
+<input name="quantity" type="number" min="1" value="1"/>
+{{ form.payment_method }}
+<button type="submit">Cobrar</button>
+</form>

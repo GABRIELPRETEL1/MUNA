@@ -1,0 +1,6 @@
+[
+  {"model":"core.branch","pk":1,"fields":{"name":"Sucursal Centro","code":"CENTRO","address":"Av. Principal 100","is_active":true}},
+  {"model":"pos.category","pk":1,"fields":{"name":"Bebidas"}},
+  {"model":"pos.product","pk":1,"fields":{"sku":"BEB-001","name":"Agua 600ml","category":1,"price":"1.50","stock":100,"low_stock_threshold":10,"branch":1,"is_active":true}},
+  {"model":"pos.customer","pk":1,"fields":{"full_name":"Cliente Demo","email":"demo@example.com","phone":"123456"}}
+]
