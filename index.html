@@ -197,13 +197,21 @@
       const annualEffective = teaFromNominal(annualNominal, freq);
       let reachedAt = null;
 
+      // Convert the selected compounding schedule to its equivalent monthly growth.
+      // Deposits arrive at each month end, after that month's interest accrues.
+      const monthlyRate = (1 + annualNominal / freq) ** (freq / 12) - 1;
       for (let year = 1; year <= years; year++) {
-        const annualContribution = monthly * 12 * ((1 + contribGrowth) ** (year - 1));
-        const preTaxGain = balance * annualEffective;
+        const monthlyContribution = monthly * ((1 + contribGrowth) ** (year - 1));
+        const annualContribution = monthlyContribution * 12;
+        let preTaxGain = 0;
+        for (let month = 1; month <= 12; month++) {
+          const gain = balance * monthlyRate;
+          balance += gain + monthlyContribution;
+          preTaxGain += gain;
+        }
         const taxPaid = Math.max(preTaxGain, 0) * tax;
         const netGain = preTaxGain - taxPaid;
-
-        balance += annualContribution + netGain;
+        balance -= taxPaid;
         totalContrib += annualContribution;
 
         const realBalance = balance / ((1 + inflation) ** year);
@@ -265,10 +273,10 @@
         ...scenarios.pesimista.rows.map(r => r.balance),
         ...scenarios.optimista.rows.map(r => r.balance)
       ];
-      const maxY = Math.max(...all) * 1.1;
+      const maxY = Math.max(...all, 1) * 1.1;
       const pad = 35;
 
-      function x(i, n) { return pad + (i / (n - 1)) * (w - pad * 2); }
+      function x(i, n) { return pad + (n === 1 ? 0 : i / (n - 1)) * (w - pad * 2); }
       function y(v) { return h - pad - (v / maxY) * (h - pad * 2); }
 
       ctx.strokeStyle = '#31507f';
@@ -310,7 +318,7 @@
         ['Saldo final (real)', fmt(final.realBalance), ''],
         ['Aportaciones acumuladas', fmt(final.totalContrib), ''],
         ['Rendimiento acumulado', fmt(final.gainAcc), final.gainAcc >= 0 ? 'good' : 'danger'],
-        ['TEA neta estimada', pct(base.annualEffective * 100), 'warn'],
+        ['TEA tras comisión, antes de impuestos', pct(base.annualEffective * 100), 'warn'],
         ['Año de meta', base.reachedAt ? `Año ${base.reachedAt}` : 'No alcanzada', base.reachedAt ? 'good' : 'danger']
       ].map(([l, v, cls]) => `<div class="kpi"><div class="l">${l}</div><div class="v ${cls}">${v}</div></div>`).join('');
       $('kpis').innerHTML = kpiHtml;
