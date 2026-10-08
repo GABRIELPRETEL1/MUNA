@@ -1,0 +1,4 @@
+<h1>Dashboard POS</h1>
+<p>Ventas acumuladas: {{ daily_total }}</p>
+<h2>Stock bajo</h2>
+<ul>{% for p in low_stock %}<li>{{ p.name }} ({{ p.stock }})</li>{% endfor %}</ul>
