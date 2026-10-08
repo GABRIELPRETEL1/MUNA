@@ -15,7 +15,7 @@ def checkout(request):
     if request.method == 'POST':
         form = SaleCheckoutForm(request.POST)
         if form.is_valid():
-            product = get_object_or_404(Product, pk=request.POST.get('product_id'), branch=request.user.branch)
+            product = get_object_or_404(Product, pk=request.POST.get('product_id'), branch=request.user.branch, is_active=True)
             qty = int(request.POST.get('quantity', 1))
             SaleService.process_sale(request.user.branch, request.user, [{'product_id': product.id, 'quantity': qty}], form.cleaned_data['payment_method'])
             return redirect('dashboard')
