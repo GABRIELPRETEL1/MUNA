@@ -12,4 +12,4 @@ def monthly_sales(branch):
 
 
 def sales_by_product(branch):
-    return SaleItem.objects.filter(sale__branch=branch).values('product__name').annotate(total=Sum('quantity')).order_by('-total')
+    return SaleItem.objects.filter(sale__branch=branch).values('product__id', 'product__sku', 'product__name').annotate(total=Sum('quantity')).order_by('-total')

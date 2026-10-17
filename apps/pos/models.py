@@ -63,7 +63,7 @@ class SaleService:
         total = Decimal('0.00')
         sale = Sale.objects.create(branch=branch, cashier=cashier, customer=customer, total=0, payment_method=payment_method)
         for item in items:
-            product = Product.objects.select_for_update().get(pk=item['product_id'], branch=branch)
+            product = Product.objects.select_for_update().get(pk=item['product_id'], branch=branch, is_active=True)
             qty = int(item['quantity'])
             if qty <= 0:
                 raise ValueError('Cantidad inválida')
