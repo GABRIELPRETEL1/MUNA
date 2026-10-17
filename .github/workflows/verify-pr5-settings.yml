@@ -27,6 +27,6 @@ jobs:
       - name: Production settings tests
         run: python -m unittest pos_project.settings.test_production_settings -v
       - name: Available Django regression tests
-        run: python manage.py test apps.pos apps.reports pos_project.settings --settings=pos_project.settings.development -v 2
+        run: python manage.py test apps.pos apps.reports pos_project.settings --settings=pos_project.settings.development --top-level-directory . -v 2
       - name: Development system checks
         run: python manage.py check --settings=pos_project.settings.development
